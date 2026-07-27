@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="TaskFlow Pro — Production-quality To-Do application with subtasks, JSON export/import, sound effects, categories, keyboard shortcuts, and local storage.">
+  <title>TaskFlow Pro — Ultimate Task Manager</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Google Fonts for modern typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="background-glob glob-1"></div>
+  <div class="background-glob glob-2"></div>
+
+  <div class="app-container" role="main">
+    <!-- Header Section -->
+    <header class="app-header">
+      <div class="header-brand">
+        <div class="logo-icon" aria-hidden="true">
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z"></path>
+            <path d="m9 12 2 2 4-4"></path>
+          </svg>
+        </div>
+        <div>
+          <h1 class="app-title">TaskFlow <span class="badge-pro">Pro Max</span></h1>
+          <p class="app-subtitle">Ultimate Productivity Suite</p>
+        </div>
+      </div>
+      
+      <div class="header-actions">
+        <!-- Shortcuts Cheat Sheet Trigger -->
+        <button id="shortcutsBtn" class="icon-btn" aria-label="Keyboard Shortcuts" title="Keyboard Shortcuts (?)">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="10"></circle>
+            <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path>
+            <line x1="12" y1="17" x2="12.01" y2="17"></line>
+          </svg>
+        </button>
+
+        <!-- Sound Toggle -->
+        <button id="soundToggleBtn" class="icon-btn" aria-label="Toggle Sound Effects" title="Toggle Audio Effects">
+          <svg class="sound-on-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+          </svg>
+          <svg class="sound-off-icon hidden" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+            <line x1="23" y1="9" x2="17" y2="15"></line>
+            <line x1="17" y1="9" x2="23" y2="15"></line>
+          </svg>
+        </button>
+
+        <!-- Backup Export / Import Data -->
+        <button id="exportBtn" class="icon-btn" aria-label="Export Data" title="Backup / Export Tasks to JSON">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="7 10 12 15 17 10"></polyline>
+            <line x1="12" y1="15" x2="12" y2="3"></line>
+          </svg>
+        </button>
+        <button id="importTriggerBtn" class="icon-btn" aria-label="Import Data" title="Restore / Import Tasks from JSON">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+            <polyline points="17 8 12 3 7 8"></polyline>
+            <line x1="12" y1="3" x2="12" y2="15"></line>
+          </svg>
+        </button>
+        <input type="file" id="importFileInput" accept=".json" class="hidden">
+
+        <!-- Theme Switcher -->
+        <button id="themeToggleBtn" class="icon-btn" aria-label="Toggle theme mode" title="Toggle Light/Dark Theme">
+          <svg class="sun-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="moon-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Statistics Overview Card -->
+    <section class="stats-card" aria-label="Task Statistics">
+      <div class="stat-item">
+        <span class="stat-label">Total Tasks</span>
+        <span id="totalTasksCount" class="stat-value">0</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-label">Active</span>
+        <span id="activeTasksCount" class="stat-value highlight-active">0</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-label">Completed</span>
+        <span id="completedTasksCount" class="stat-value highlight-completed">0</span>
+      </div>
+      <div class="progress-bar-container" aria-label="Task completion progress">
+        <div id="progressBar" class="progress-bar-fill" style="width: 0%;"></div>
+      </div>
+    </section>
+
+    <!-- Task Input Form -->
+    <section class="card input-card">
+      <form id="addTaskForm" class="add-task-form" aria-label="Add new task form">
+        <div class="input-main-row">
+          <div class="input-wrapper">
+            <input type="text" id="taskInput" class="task-input" placeholder="What needs to be done? (Press '/' to focus)" autocomplete="off" aria-label="New task description" required>
+          </div>
+          <button type="submit" id="addTaskBtn" class="btn btn-primary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <line x1="12" y1="5" x2="12" y2="19"></line>
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            <span>Add Task</span>
+          </button>
+        </div>
+
+        <div class="input-options-row">
+          <div class="option-group">
+            <label for="categorySelect" class="option-label">Category</label>
+            <select id="categorySelect" class="custom-select" aria-label="Select Category">
+              <option value="general" selected>📁 General</option>
+              <option value="work">💼 Work</option>
+              <option value="personal">👤 Personal</option>
+              <option value="health">🏋️ Health</option>
+              <option value="shopping">🛒 Shopping</option>
+            </select>
+          </div>
+
+          <div class="option-group">
+            <label for="prioritySelect" class="option-label">Priority</label>
+            <select id="prioritySelect" class="custom-select" aria-label="Select priority level">
+              <option value="medium" selected>Medium Priority</option>
+              <option value="high">High Priority</option>
+              <option value="low">Low Priority</option>
+            </select>
+          </div>
+
+          <div class="option-group">
+            <label for="dueDateInput" class="option-label">Due Date</label>
+            <input type="date" id="dueDateInput" class="custom-date-input" aria-label="Select due date">
+          </div>
+        </div>
+      </form>
+    </section>
+
+    <!-- Control Toolbar (Search, Filter, Category, Sort) -->
+    <section class="toolbar-section">
+      <div class="search-box">
+        <svg class="search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+        <input type="text" id="searchInput" placeholder="Search tasks by name or category... (Press Ctrl+K)" aria-label="Search tasks">
+        <button id="clearSearchBtn" class="clear-search-btn hidden" aria-label="Clear search">✕</button>
+      </div>
+
+      <div class="toolbar-controls">
+        <!-- Filter Tabs -->
+        <nav class="filter-tabs" aria-label="Task Filter Tabs">
+          <button class="filter-btn active" data-filter="all" aria-selected="true">All</button>
+          <button class="filter-btn" data-filter="active" aria-selected="false">Active</button>
+          <button class="filter-btn" data-filter="completed" aria-selected="false">Completed</button>
+        </nav>
+
+        <div class="toolbar-right">
+          <!-- Category Filter Dropdown -->
+          <select id="filterCategorySelect" class="custom-select sort-select" aria-label="Filter by Category">
+            <option value="all" selected>All Categories</option>
+            <option value="general">📁 General</option>
+            <option value="work">💼 Work</option>
+            <option value="personal">👤 Personal</option>
+            <option value="health">🏋️ Health</option>
+            <option value="shopping">🛒 Shopping</option>
+          </select>
+
+          <!-- Sort Dropdown -->
+          <select id="sortSelect" class="custom-select sort-select" aria-label="Sort tasks by">
+            <option value="newest">Newest First</option>
+            <option value="oldest">Oldest First</option>
+            <option value="dueDate">Due Date</option>
+            <option value="priority">Priority</option>
+          </select>
+
+          <!-- Clear Completed Button -->
+          <button id="clearCompletedBtn" class="btn btn-secondary btn-small" title="Delete all completed tasks">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polyline points="3 6 5 6 21 6"></polyline>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            </svg>
+            <span>Clear Completed</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Main Task List -->
+    <section class="task-list-section">
+      <ul id="taskList" class="task-list" aria-live="polite" aria-label="Task list">
+        <!-- Task items populated dynamically via script.js -->
+      </ul>
+
+      <!-- Empty State Illustration & Message -->
+      <div id="emptyState" class="empty-state hidden">
+        <div class="empty-illustration">
+          <svg width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+            <polyline points="14 2 14 8 20 8"></polyline>
+            <line x1="9" y1="15" x2="15" y2="15"></line>
+            <line x1="9" y1="11" x2="13" y2="11"></line>
+          </svg>
+        </div>
+        <h3 class="empty-title">All caught up!</h3>
+        <p class="empty-desc" id="emptyStateDesc">No tasks found. Add a task above to get started.</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- Reusable Confirmation Modal -->
+  <div id="modalOverlay" class="modal-overlay hidden" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h3 id="modalTitle">Confirm Action</h3>
+        <button id="modalCloseBtn" class="icon-btn-close" aria-label="Close modal">✕</button>
+      </div>
+      <p id="modalMessage">Are you sure you want to proceed?</p>
+      <div class="modal-actions">
+        <button id="modalCancelBtn" class="btn btn-secondary">Cancel</button>
+        <button id="modalConfirmBtn" class="btn btn-danger">Confirm Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Keyboard Shortcuts Cheat Sheet Modal -->
+  <div id="shortcutsOverlay" class="modal-overlay hidden" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="shortcutsTitle">
+    <div class="modal-card shortcuts-card">
+      <div class="modal-header">
+        <h3 id="shortcutsTitle">⌨️ Keyboard Shortcuts</h3>
+        <button id="shortcutsCloseBtn" class="icon-btn-close" aria-label="Close shortcuts">✕</button>
+      </div>
+      <ul class="shortcuts-list">
+        <li><kbd>/</kbd> or <kbd>Ctrl+N</kbd> Focus new task input</li>
+        <li><kbd>Ctrl+K</kbd> Focus search input</li>
+        <li><kbd>Esc</kbd> Clear search or cancel inline editing</li>
+        <li><kbd>Enter</kbd> Save task or commit inline edit</li>
+        <li><kbd>?</kbd> Open this shortcuts window</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Toast Notification System -->
+  <div id="toastContainer" class="toast-container" aria-live="assertive"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
